@@ -37,6 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'manage',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,9 +62,9 @@ WSGI_APPLICATION = 'tiktoktweet.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_cassandra_engine',
-        'NAME': 'db',
+        'NAME': 'tiktok',
         'TEST_NAME': 'test_db',
-        'HOST': 'db1.example.com,db2.example.com',
+        'HOST': '127.0.0.1',
         'OPTIONS': {
             'replication': {
                 'strategy_class': 'SimpleStrategy',
