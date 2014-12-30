@@ -23,13 +23,17 @@ def create_post(request):
     return HttpResponse(text)
 
 def queue(request):
-    return HttpResponse("hi")
+    template = loader.get_template('tiktokadmin/queue.html')
+    context = RequestContext(request)
+    return HttpResponse(template.render(context))
 
 
 
 def queue_created(request):
-    return HttpResponse("hi")
-    
+    text = request.POST['queuename']
+    Tweets.create(id = uuid.uuid4(), created = datetime.utcnow(), modified = datetime.utcnow(),  name = text)
+    return HttpResponse(text)
+
 
 """
 def schedule(request):
