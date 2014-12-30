@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form action="{% url 'tiktokadmin:create_post'  %}" method="post">
+    {% csrf_token %}
+    <h2>Create a Tweet</h2>
+    <textarea class="medium" name="tweettext" cols="20" rows="5" ></textarea>
+    <br>
+    <input type="submit" value="Submit"/>
+</form>
+
+</body>
+</html>
