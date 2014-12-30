@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
+from tiktokadmin.models import Tweets
+import uuid
+from datetime import datetime
 
 # Create your views here.
 
@@ -16,15 +19,20 @@ def create(request):
 
 def create_post(request):
     text = request.POST['tweettext']
+    Tweets.create(id = uuid.uuid4(), created = datetime.utcnow(), modified = datetime.utcnow(),  tweet = text)
     return HttpResponse(text)
 
+def queue(request):
+    return HttpResponse("hi")
 
+
+
+def queue_created(request):
+    return HttpResponse("hi")
+    
 
 """
 def schedule(request):
-
-
-def queue(request):
 
 
 def queue_detail(request):
