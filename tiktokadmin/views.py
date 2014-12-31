@@ -26,8 +26,8 @@ def queue(request):
     template = loader.get_template('tiktokadmin/queue.html')
     context = RequestContext(request)
     queue_list = Queue.objects.all()
-    return HttpResponse(template.render(context), {'queue_list': queue_list[0]})
-
+  #  return HttpResponse(template.render(context), {'queue_list': queue_list[:]})
+    return HttpResponse(queue_list[:])
 
 def queue_created(request):
     text = request.POST['queuename']
