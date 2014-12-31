@@ -8,6 +8,7 @@ urlpatterns = patterns('',
                        url(r'^create/add/$', views.create_post, name='create_post'),
                        url(r'^queue/$', views.queue, name='queue'),
                        url(r'^queue/add/$', views.queue_created, name='queue_created'),
+                       url(r'^queue/edit/$', views.queue_edit, name='queue_edit'),
 
 
                        )

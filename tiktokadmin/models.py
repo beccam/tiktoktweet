@@ -23,6 +23,7 @@ class Tweets_queue(Model):
     time_to_send = columns.DateTime(primary_key=True, clustering_order="DESC")
     tweet_id = columns.UUID()
 
+
 class Queue_tweet_responses(Model):
     queue_id = columns.UUID(primary_key=True)
     time_received = columns.TimeUUID(primary_key=True, clustering_order="DESC")

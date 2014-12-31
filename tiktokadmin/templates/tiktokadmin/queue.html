@@ -1,10 +1,25 @@
 <!DOCTYPE html>
 <html>
 <body>
+<h2>Manage a queue</h2>
+
+<form action="{% url 'tiktokadmin:queue_edit'  %}" method="post">
+    {% csrf_token %}
+
+
+    <label>Select a queue to edit:</label>
+    <select id = "myList">
+        {% for queue in queue_list %}
+        <option value = "1">{{queue.id}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Submit"/>
+
+</form>
 
 <form action="{% url 'tiktokadmin:queue_created'  %}" method="post">
     {% csrf_token %}
-    <h2>Manage a queue</h2>
+
     Create a new queue:<input class="medium" type="text" name="queuename"/>
     <input type="submit" value="Submit"/>
 </form>
