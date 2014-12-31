@@ -37,6 +37,20 @@ def queue_created(request):
 def queue_edit(request):
     return HttpResponse("hi")
 
+def queue_deleted(request):
+    return HttpResponse("hi")
+
+def tweet_edit(request):
+    template = loader.get_template('tiktokadmin/tweet_edit.html')
+    context = RequestContext(request)
+    return HttpResponse(template.render(context))
+
+def schedule_tweet(request):
+    return HttpResponse("hi")
+
+
+
+
 
 
 """
