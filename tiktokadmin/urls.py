@@ -12,6 +12,8 @@ urlpatterns = patterns('',
                        url(r'^queue/edit/tweet_edit/$', views.tweet_edit, name='tweet_edit'),
                        url(r'^queue/delete/$', views.queue_deleted, name='queue_deleted'),
                        url(r'^schedule/$', views.schedule_tweet, name='schedule_tweet'),
+                       url(r'^responses/$', views.responses, name='responses'),
+                       url(r'^responses/manage/$', views.responses_manage, name='responses_manage'),
 
 
                        )

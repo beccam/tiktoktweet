@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Manage Responses</h2>
+
+<form action="{% url 'tiktokadmin:responses_manage'  %}" method="post">
+    {% csrf_token %}
+    <br>
+    <label>Select a queue:</label>
+    <select id = "myList">
+        {% for queue in queue_list %}
+        <option value = "{{queue.id}}">{{queue.name}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Submit"/>
+</form>
+
+
+
+</body>
+</html>

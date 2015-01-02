@@ -24,10 +24,9 @@ def create_post(request):
 
 def queue(request):
     template = loader.get_template('tiktokadmin/queue.html')
-    context = RequestContext(request)
     queue_list = Queue.objects.all()
-  #  return HttpResponse(template.render(context), {'queue_list': queue_list[:]})
-    return HttpResponse(queue_list[:])
+    context = RequestContext(request, {'queue_list': queue_list})
+    return HttpResponse(template.render(context))
 
 def queue_created(request):
     text = request.POST['queuename']
@@ -46,8 +45,20 @@ def tweet_edit(request):
     return HttpResponse(template.render(context))
 
 def schedule_tweet(request):
-    return HttpResponse("hi")
+    template = loader.get_template('tiktokadmin/schedule_tweet.html')
+    tweet_list = Tweets.objects.all()
+    context = RequestContext(request, {'tweet_list': tweet_list})
+    return HttpResponse(template.render(context))
 
+
+def responses(request):
+    template = loader.get_template('tiktokadmin/responses.html')
+    tweet_list = Tweets.objects.all()
+    context = RequestContext(request, {'tweet_list': tweet_list})
+    return HttpResponse(template.render(context))
+
+def responses_manage(request):
+    return HttpResponse("hi")
 
 
 
@@ -66,5 +77,5 @@ def edit(request):
 def responses(request):
 
 
-def responses_detail(request):
+def responses_manage(request):
 """

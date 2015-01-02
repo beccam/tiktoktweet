@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form method="post">
+    <h2>Manage a queue</h2>
+    <p>Name of queue</p>
+    <table border ="1">
+        {% for queue in queue_list %}
+        <tr>
+            <td>Item </td>
+        </tr>
+
+
+    </table>
+
+    <br>
+    <input type="checkbox" name="checkbox[]" value="Delete queue">Delete queue <
+    <br>
+    <input type="submit" value="Submit"/></form>
+
+</body>
+</html>
