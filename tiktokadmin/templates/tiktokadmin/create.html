@@ -10,5 +10,26 @@
     <input type="submit" value="Submit"/>
 </form>
 
+<br>
+
+<form action="{% url 'tiktokadmin:create_to_queue'  %}" method="post">
+    {% csrf_token %}<br>
+
+    <label>Add to queue:</label>
+    <select id = "myList">
+        {% for queue in queue_list %}
+        <option value = "{{queue.id}}">{{queue.name}}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    <label>Time to tweet in the form yyyy-mm-dd hh:mm:ss</label>
+    <div class="element-input"><label class="title"></label><div class="item-cont"><input class="large" type="datetime" name="when_to_tweet" placeholder="yyyy-mm-dd hh:mm:ss"/><span class="icon-place"></span></div></div>
+
+    <br>
+
+    <input type="submit" value="Submit"/>
+
+</form>
+
 </body>
 </html>

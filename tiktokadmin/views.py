@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from tiktokadmin.models import Tweets, Queue
+from tiktokadmin.models import Tweets, Queue, Tweets_queue
 import uuid
 from datetime import datetime
 
@@ -21,6 +21,12 @@ def create_post(request):
     text = request.POST['tweettext']
     Tweets.create(id = uuid.uuid4(), created = datetime.utcnow(), modified = datetime.utcnow(),  tweet = text)
     return HttpResponse(text)
+
+def create_to_queue(request):
+    tweet_time = request.POST['when_to_tweet']
+    queue_name = request.POST['{{queue.id}}']
+    Tweets_queue.create(queue_id = queue_name, time_to_send = tweet_time, tweet_id = Tweets.get(id))
+    return HttpResponse(tweet_time, queue_name )
 
 def queue(request):
     template = loader.get_template('tiktokadmin/queue.html')
