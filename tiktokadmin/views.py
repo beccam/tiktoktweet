@@ -14,19 +14,22 @@ def index(request):
 
 def create(request):
     template = loader.get_template('tiktokadmin/create.html')
-    context = RequestContext(request)
+    queue_list = Queue.objects.all()
+    context = RequestContext(request, {'queue_list': queue_list})
     return HttpResponse(template.render(context))
 
 def create_post(request):
     text = request.POST['tweettext']
-    Tweets.create(id = uuid.uuid4(), created = datetime.utcnow(), modified = datetime.utcnow(),  tweet = text)
-    return HttpResponse(text)
-
-def create_to_queue(request):
     tweet_time = request.POST['when_to_tweet']
-    queue_name = request.POST['{{queue.id}}']
-    Tweets_queue.create(queue_id = queue_name, time_to_send = tweet_time, tweet_id = Tweets.get(id))
-    return HttpResponse(tweet_time, queue_name )
+    queueid = request.POST['queue_id']
+    tweetid = uuid.uuid4()
+    Tweets.create(id = tweetid, created = datetime.utcnow(), modified = datetime.utcnow(),  tweet = text)
+    Tweets_queue.create(queue_id = queueid, time_to_send = tweet_time, tweet_id = tweetid)
+    return HttpResponse(text, tweet_time, queueid)
+
+
+
+
 
 def queue(request):
     template = loader.get_template('tiktokadmin/queue.html')

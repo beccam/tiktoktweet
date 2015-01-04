@@ -6,17 +6,11 @@
     {% csrf_token %}
     <h2>Create a Tweet</h2>
     <textarea class="medium" name="tweettext" cols="20" rows="5" ></textarea>
-    <br>
-    <input type="submit" value="Submit"/>
-</form>
 
 <br>
 
-<form action="{% url 'tiktokadmin:create_to_queue'  %}" method="post">
-    {% csrf_token %}<br>
-
     <label>Add to queue:</label>
-    <select id = "myList">
+    <select name = "queue_id">
         {% for queue in queue_list %}
         <option value = "{{queue.id}}">{{queue.name}}</option>
         {% endfor %}
