@@ -8,7 +8,7 @@
 
 
     <label>Select a queue to edit:</label>
-    <select id = "myList">
+    <select name = "queue_id">
         {% for queue in queue_list %}
         <option value = "{{queue.id}}">{{queue.name}}</option>
         {% endfor %}

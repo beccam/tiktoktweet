@@ -3,9 +3,9 @@
 <html>
 <body>
 
-<form method="post">
+<form action="{% url 'tiktokadmin:tweet_edit'  %}" method="post">
     <h2>Manage a queue</h2>
-    <p>Name of queue</p>
+    <p>queue name</p>
     <table border ="1">
         {% for tweets in tweet_list %}
         <tr>
