@@ -9,14 +9,19 @@
     <table border ="1">
         {% for tweets in tweet_list %}
         <tr>
-            <td><option values = "{{tweets.id}}">{{tweets.tweet}}</option></td>
+            <td>
+                <form action="{% url 'tiktokadmin:tweet_edit'  %}" method="post">
+                    <option values = "{{tweets.id}}">{{tweets.tweet}}</option>
+                    <input type="submit" value="Edit" >
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </table>
-    <input type="submit" value="Submit"/>
+
 
     <br>
-    <input type="checkbox" name="checkbox[]" value="Delete queue">Delete queue <
+    <input type="checkbox" name="checkbox[]" value="Delete queue">Delete queue
     <br>
     <input type="submit" value="Submit"/></form>
 
