@@ -75,7 +75,7 @@ def tweet_final(request):
     tweet_time = datetime.strptime(tweet_time, '%Y-%m-%d %H:%M:%S')
     queue_id = request.POST['queue_id']
     Tweets.objects(id=tweet_id).update(tweet= text, modified = datetime.utcnow())
-    Tweets_queue.objects(id=queue_id).update(time_to_send = tweet_time)
+    Tweets_queue.objects(queue_id=queue_id).update(time_to_send = tweet_time)
     return HttpResponse(text)
 
 
