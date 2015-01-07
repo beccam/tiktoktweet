@@ -23,6 +23,7 @@
 
     <br>
     <form action="{% url 'tiktokadmin:queue_delete'  %}" method="post">
+        {% csrf_token %}
     <input type="checkbox" name="queue_id" value='{{queue_id}}'>Delete queue
     <br>
     <input type="submit" value="Submit"/></form>

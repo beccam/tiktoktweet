@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from tiktokadmin.models import Tweets, Queue, Tweets_queue
+from tiktokadmin.models import Tweets, Queue, Tweets_queue, Queue_tweet_responses
 import uuid
 from datetime import datetime
 
@@ -48,7 +48,7 @@ def queue_edit(request):
     tweet_list = []
     for entry in tweetqueue_list:
         tweet_list.append(Tweets.get(id = entry.tweet_id))
-    context = RequestContext(request, {'tweet_list': tweet_list},{'queue_id': queue_id} )
+    context = RequestContext(request, {'tweet_list': tweet_list,'queue_id': queue_id} )
     return HttpResponse(template.render(context))
 
 
@@ -65,7 +65,7 @@ def tweet_edit(request):
     tweet_id = request.POST['tweet_id']
     queue_id = request.POST['queue_id']
     tweet_data = Tweets.get(id = tweet_id)
-    context = RequestContext(request, {'tweet_data':tweet_data}, {'queue_id': queue_id})
+    context = RequestContext(request, {'tweet_data':tweet_data,'queue_id': queue_id})
     return HttpResponse(template.render(context))
 
 def tweet_final(request):
@@ -88,12 +88,16 @@ def schedule_tweet(request):
 
 def responses(request):
     template = loader.get_template('tiktokadmin/responses.html')
-    tweet_list = Tweets.objects.all()
-    context = RequestContext(request, {'tweet_list': tweet_list})
+    queue_list = Queue.objects.all()
+    context = RequestContext(request, {'queue_list': queue_list})
     return HttpResponse(template.render(context))
 
 def responses_manage(request):
-    return HttpResponse("hi")
+    template = loader.get_template('tiktokadmin/responses_manage.html')
+    queue_id = request.POST['queue_id']
+    responsequeue_list = Queue_tweet_responses.filter(queue_id = queue_id)
+    context = RequestContext(request, {'responsequeue_list': responsequeue_list})
+    return HttpResponse(template.render(context))
 
 def tweet_delete(request):
     return HttpResponse("hi")
