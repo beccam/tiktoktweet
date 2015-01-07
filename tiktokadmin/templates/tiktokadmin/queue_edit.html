@@ -3,7 +3,6 @@
 <html>
 <body>
 
-<form action="{% url 'tiktokadmin:tweet_edit'  %}" method="post">
     <h2>Manage a queue</h2>
     <p>queue name</p>
     <table border ="1">
@@ -11,7 +10,9 @@
         <tr>
             <td>
                 <form action="{% url 'tiktokadmin:tweet_edit'  %}" method="post">
-                    <option values = "{{tweets.id}}">{{tweets.tweet}}</option>
+                    {% csrf_token %}
+                    <input type="hidden" name = tweet_id ><input type="hidden" name = 'tweet_id' value='{{tweets.id}}' >{{tweets.tweet}}
+
                     <input type="submit" value="Edit" >
                 </form>
             </td>
@@ -21,6 +22,7 @@
 
 
     <br>
+    <form action="{% url 'tiktokadmin:queue_delete'  %}" method="post">
     <input type="checkbox" name="checkbox[]" value="Delete queue">Delete queue
     <br>
     <input type="submit" value="Submit"/></form>

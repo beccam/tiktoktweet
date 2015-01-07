@@ -2,12 +2,22 @@
 <html>
 <body>
 
-<form classmethod="post"><h2>Edit Tweet</h2>
-    <textarea class="medium" name="textarea" cols="20" rows="5" ></textarea>
-    <br>
-    <input type="submit" value="Submit"/></form>
 
+    <h2>Edit Tweet</h2>
+    <form action="{% url 'tiktokadmin:tweet_final'  %}" method="post">
+        {% csrf_token %}
 
-</body>
-</html>
+        <textarea  name = 'tweettext' cols="20" rows="5">{{ tweet_data.tweet }}</textarea><input type="hidden" name = 'tweet_id' value='{{tweet_data.id}}' >
+        <input type="hidden" name = 'queue_id' value='{{queue_id}}' >
+        <br><br>
+        <label>Edit time to tweet <br>
+            yyyy-mm-dd hh:mm:ss</label>
+        <div class="element-input"><label class="title"></label><div class="item-cont"><input class="large" type="datetime" name="new_time" placeholder="yyyy-mm-dd hh:mm:ss"/><span class="icon-place"></span></div></div>
 
+        <br>
+
+        <input type="submit" value="Submit"/>
+
+    </form>
+    </body>
+    </html>
