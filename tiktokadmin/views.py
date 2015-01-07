@@ -48,7 +48,7 @@ def queue_edit(request):
     tweet_list = []
     for entry in tweetqueue_list:
         tweet_list.append(Tweets.get(id = entry.tweet_id))
-    context = RequestContext(request, {'tweet_list': tweet_list}, )
+    context = RequestContext(request, {'tweet_list': tweet_list},{'queue_id': queue_id} )
     return HttpResponse(template.render(context))
 
 
@@ -65,7 +65,7 @@ def tweet_edit(request):
     tweet_id = request.POST['tweet_id']
     queue_id = request.POST['queue_id']
     tweet_data = Tweets.get(id = tweet_id)
-    context = RequestContext(request, {'tweet_data':tweet_data} )
+    context = RequestContext(request, {'tweet_data':tweet_data}, {'queue_id': queue_id})
     return HttpResponse(template.render(context))
 
 def tweet_final(request):
