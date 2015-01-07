@@ -53,12 +53,12 @@ def queue_edit(request):
 
 
 def queue_delete(request):
-    if 'cb1' in queryset:
-        Tweets_queue.objects(queue_id=some_id).delete()
-        Queue.objects(id=some_id).delete()
+    if 'queue_id' in request.POST['queue_id']:
+        Tweets_queue.objects(queue_id= queue_id).delete()
+        Queue.objects(id= queue_id).delete()
     else:
         pass
-    return HttpResponse("hi")
+    return HttpResponse("Tweet Deleted")
 
 def tweet_edit(request):
     template = loader.get_template('tiktokadmin/tweet_edit.html')
