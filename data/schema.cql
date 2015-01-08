@@ -32,8 +32,8 @@ CREATE TABLE tweets_queue (
    queue_id UUID,
    time_to_send timestamp,
    tweet_id UUID,
-   PRIMARY KEY(queue_id, time_to_send)
-) WITH CLUSTERING ORDER BY (time_to_send desc);
+   PRIMARY KEY(queue_id, time_to_send, tweet_id)
+) WITH CLUSTERING ORDER BY (time_to_send DESC, tweet_id ASC);
 
 
 //Tables to hold responses to tweets. TIMEUUID is used as a distinct identifier here to deal with the unlikely possibility that two people could reply to a tweet at the exact same time. The queue_id is including in the primary key such that we can select the responses for a particular queue. Ordering by time descending is chosen such that the latest reply will be at the top of the list.

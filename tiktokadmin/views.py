@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from tiktokadmin.models import Tweets, Queue, Tweets_queue, Queue_tweet_responses
+from tiktokadmin.classes import TweetMetaData
 import uuid
 from datetime import datetime
 
@@ -47,36 +48,53 @@ def queue_edit(request):
     #do a foreach loop on tweetqueue_list to get all tweet_ids for reteiving tweets from Tweets table.
     tweet_list = []
     for entry in tweetqueue_list:
-        tweet_list.append(Tweets.get(id = entry.tweet_id))
+        tweet = Tweets.get(id = entry.tweet_id)
+        tweet_list = tweet_list.append(TweetMetaData(tweet.id, tweet.tweet, entry.queue_id, entry.time_to_send))
     context = RequestContext(request, {'tweet_list': tweet_list,'queue_id': queue_id} )
     return HttpResponse(template.render(context))
 
 
 def queue_delete(request):
     if 'queue_id' in request.POST['queue_id']:
+        queue_id = request.POST['queue_id']
         Tweets_queue.objects(queue_id= queue_id).delete()
         Queue.objects(id= queue_id).delete()
+        return HttpResponse("Tweet Deleted")
     else:
         pass
-    return HttpResponse("Tweet Deleted")
+
 
 def tweet_edit(request):
-    template = loader.get_template('tiktokadmin/tweet_edit.html')
-    tweet_id = request.POST['tweet_id']
-    queue_id = request.POST['queue_id']
-    tweet_data = Tweets.get(id = tweet_id)
-    context = RequestContext(request, {'tweet_data':tweet_data,'queue_id': queue_id})
-    return HttpResponse(template.render(context))
+    if 'queue_id' in request.POST:
+        template = loader.get_template('tiktokadmin/tweet_edit.html')
+        tweet_id = request.POST['tweet_id']
+        queue_id = request.POST['queue_id']
+        tweet_data = Tweets.get(id = tweet_id)
+        context = RequestContext(request, {'tweet_data':tweet_data,'queue_id': queue_id})
+        return HttpResponse(template.render(context))
+    else:
+        template = loader.get_template('tiktokadmin/tweet_edit.html')
+        tweet_id = request.POST['tweet_id']
+        tweet_data = Tweets.get(id = tweet_id)
+        context = RequestContext(request, {'tweet_data':tweet_data})
+        return HttpResponse(template.render(context))
 
 def tweet_final(request):
-    text = request.POST['tweettext']
-    tweet_time = request.POST['new_time']
-    tweet_id = request.POST['tweet_id']
-    tweet_time = datetime.strptime(tweet_time, '%Y-%m-%d %H:%M:%S')
-    queue_id = request.POST['queue_id']
-    Tweets.objects(id=tweet_id).update(tweet= text, modified = datetime.utcnow())
-    Tweets_queue.objects(queue_id=queue_id).update(time_to_send = tweet_time)
-    return HttpResponse(text)
+    if 'queue_id' in request.POST:
+        text = request.POST['tweettext']
+        tweet_time = request.POST['new_time']
+        tweet_id = request.POST['tweet_id']
+        tweet_time = datetime.strptime(tweet_time, '%Y-%m-%d %H:%M:%S')
+        queue_id = request.POST['queue_id']
+        Tweets.objects(id=tweet_id).update(tweet= text, modified = datetime.utcnow())
+      #  Tweets_queue.objects(queue_id = queue_id, time_to_send = ?).delete(time_to_send)
+        return HttpResponse(text)
+    else:
+        text = request.POST['tweettext']
+        tweet_time = request.POST['new_time']
+        tweet_id = request.POST['tweet_id']
+        Tweets.objects(id=tweet_id).update(tweet= text, modified = datetime.utcnow())
+        return HttpResponse(text)
 
 
 def schedule_tweet(request):
