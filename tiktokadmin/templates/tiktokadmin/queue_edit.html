@@ -11,8 +11,8 @@
             <td>
                 <form action="{% url 'tiktokadmin:tweet_edit'  %}" method="post">
                     {% csrf_token %}
-                    <input type="hidden" name = tweet_id ><input type="hidden" name = 'tweet_id' value='{{tweets.id}}' >{{tweets.tweet}}
-                    <input type="hidden" name = 'queue_id' value='{{queue_id}}' >
+                    <input type="hidden" name = tweet_id ><input type="hidden" name = 'tweet_id' value='{{tweets.tweet_id}}' >{{tweets.tweet}}
+                    <input type="hidden" name = 'queue_id' value='{{queue_id}}' > <input type="hidden" name = 'time_to_send' value='{{tweets.time_to_send}}' >
                     <input type="submit" value="Edit" >
                 </form>
             </td>

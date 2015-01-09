@@ -10,9 +10,16 @@
         <textarea  name = 'tweettext' cols="20" rows="5">{{ tweet_data.tweet }}</textarea><input type="hidden" name = 'tweet_id' value='{{tweet_data.id}}' >
         <input type="hidden" name = 'queue_id' value='{{queue_id}}' >
         <br><br>
-        <label>Edit time to tweet <br>
-            yyyy-mm-dd hh:mm:ss</label>
-        <div class="element-input"><label class="title"></label><div class="item-cont"><input class="large" type="datetime" name="new_time" placeholder="yyyy-mm-dd hh:mm:ss"/><span class="icon-place"></span></div></div>
+        <script type="text/javascript">
+         function changeThis(){
+         var formInput = document.getElementById('time_send_send').value;
+         document.getElementById('newText').innerHTML = formInput;
+         }
+         </script>
+        <p>Edit tweet: <span id='newText'></span> </p>
+
+        <input type='datetime' id='time_send_send' value='{{time_to_send}}' />
+
 
         <br>
 

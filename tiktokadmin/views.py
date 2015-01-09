@@ -49,7 +49,7 @@ def queue_edit(request):
     tweet_list = []
     for entry in tweetqueue_list:
         tweet = Tweets.get(id = entry.tweet_id)
-        tweet_list = tweet_list.append(TweetMetaData(tweet.id, tweet.tweet, entry.queue_id, entry.time_to_send))
+        tweet_list.append(TweetMetaData(tweet.id, tweet.tweet, entry.queue_id, entry.time_to_send.strftime("%Y-%m-%d %H:%M:%S")))
     context = RequestContext(request, {'tweet_list': tweet_list,'queue_id': queue_id} )
     return HttpResponse(template.render(context))
 
@@ -67,10 +67,11 @@ def queue_delete(request):
 def tweet_edit(request):
     if 'queue_id' in request.POST:
         template = loader.get_template('tiktokadmin/tweet_edit.html')
+        time_to_send = request.POST['time_to_send']
         tweet_id = request.POST['tweet_id']
         queue_id = request.POST['queue_id']
         tweet_data = Tweets.get(id = tweet_id)
-        context = RequestContext(request, {'tweet_data':tweet_data,'queue_id': queue_id})
+        context = RequestContext(request, {'tweet_data':tweet_data,'queue_id': queue_id, 'time_to_send': time_to_send})
         return HttpResponse(template.render(context))
     else:
         template = loader.get_template('tiktokadmin/tweet_edit.html')
