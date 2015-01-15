@@ -55,11 +55,11 @@ def queue_edit(request):
 
 
 def queue_delete(request):
-    if 'queue_id' in request.POST['queue_id']:
+    if 'queue_id' in request.POST:
         queue_id = request.POST['queue_id']
         Tweets_queue.objects(queue_id= queue_id).delete()
         Queue.objects(id= queue_id).delete()
-        return HttpResponse("Tweet Deleted")
+        return HttpResponse("Queue Deleted")
     else:
         pass
 
@@ -83,12 +83,15 @@ def tweet_edit(request):
 def tweet_final(request):
     if 'queue_id' in request.POST:
         text = request.POST['tweettext']
+        old_tweet_time = request.POST['old_tweet_time']
+        old_tweet_time = datetime.strptime(old_tweet_time, '%Y-%m-%d %H:%M:%S')
         tweet_time = request.POST['new_time']
         tweet_id = request.POST['tweet_id']
         tweet_time = datetime.strptime(tweet_time, '%Y-%m-%d %H:%M:%S')
         queue_id = request.POST['queue_id']
         Tweets.objects(id=tweet_id).update(tweet= text, modified = datetime.utcnow())
-      #  Tweets_queue.objects(queue_id = queue_id, time_to_send = ?).delete(time_to_send)
+        Tweets_queue.objects(queue_id = queue_id, time_to_send = old_tweet_time).delete()
+        Tweets_queue.create(queue_id = queue_id, time_to_send = tweet_time, tweet_id = tweet_id)
         return HttpResponse(text)
     else:
         text = request.POST['tweettext']
@@ -120,6 +123,21 @@ def responses_manage(request):
 
 def tweet_delete(request):
     return HttpResponse("hi")
+
+def add_queue(request):
+    template = loader.get_template('tiktokadmin/add_queue.html')
+    tweet_id = request.POST['tweet_id']
+    queue_list = Queue.objects.all()
+    context = RequestContext(request, {'queue_list': queue_list, 'tweet_id': tweet_id})
+    return HttpResponse(template.render(context))
+
+def add_queue_done(request):
+    tweet_id = request.POST['tweet_id']
+    when_to_tweet = request.POST['when_to_tweet']
+    tweet_time = datetime.strptime(when_to_tweet, '%Y-%m-%d %H:%M:%S')
+    queue_id = request.POST['queue_id']
+    Tweets_queue.create(queue_id = queue_id, time_to_send = tweet_time, tweet_id = tweet_id)
+    return HttpResponse("tweet queued")
 
 
 

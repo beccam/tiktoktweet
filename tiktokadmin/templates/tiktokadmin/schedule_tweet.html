@@ -7,14 +7,18 @@
 
 <h2>Schedule a Tweet</h2>
 
-<form action="{% url 'tiktokadmin:queue_edit'  %}" method="post">
+<form action="{% url 'tiktokadmin:add_queue'  %}" method="post">
     {% csrf_token %}
     <br>
 
     <table border ="1">
         {% for tweets in tweet_list %}
         <tr>
-            <td><option values = "{{tweets.id}}">{{tweets.tweet}}</option></td>
+            <td>
+
+                <input type = 'hidden' name = 'tweet_id' value = "{{tweets.id}}">{{tweets.tweet}}
+                <input type="submit" value="Add to queue" ></td>
+
         </tr>
         {% endfor %}
     </table>

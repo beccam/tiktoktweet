@@ -8,7 +8,7 @@
         {% csrf_token %}
 
         <textarea  name = 'tweettext' cols="20" rows="5">{{ tweet_data.tweet }}</textarea><input type="hidden" name = 'tweet_id' value='{{tweet_data.id}}' >
-        <input type="hidden" name = 'queue_id' value='{{queue_id}}' >
+        <input type="hidden" name = 'queue_id' value='{{queue_id}}' ><input type="hidden" name = 'old_tweet_time' value='{{time_to_send}}' >
         <br><br>
         <script type="text/javascript">
          function changeThis(){
@@ -18,7 +18,8 @@
          </script>
         <p>Edit tweet: <span id='newText'></span> </p>
 
-        <input type='datetime' id='time_send_send' value='{{time_to_send}}' />
+
+        <input type='datetime' name='new_time' value='{{time_to_send}}' />
 
 
         <br>
