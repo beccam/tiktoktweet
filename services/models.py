@@ -19,3 +19,8 @@ class Tweets_queue(Model):
     queue_id = columns.UUID(primary_key=True)
     time_to_send = columns.DateTime(primary_key=True, clustering_order="DESC")
     tweet_id = columns.UUID(primary_key=True, clustering_order="ASC")
+
+class Tweets_sent(Model):
+    queue_id = columns.UUID(primary_key=True)
+    time_sent = columns.DateTime(primary_key=True, clustering_order="DESC")
+    tweet_id = columns.UUID()
