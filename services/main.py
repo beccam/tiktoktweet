@@ -28,4 +28,7 @@ sync_table(Tweets)
 sync_table(Queue)
 sync_table(Tweets_queue)
 
-tweetqueue_list = Tweets_queue.objects.filter(queue_id = queue_id, time_to_send < datetime.utcnow())
+q= Tweets_queue.objects.filter(Tweets_queue.queue_id = ceb55051-01b6-4b41-b965-c61adb5ad817)
+q.filter(Tweets_queue.time_to_send > datetime.utcnow())
+
+print q
