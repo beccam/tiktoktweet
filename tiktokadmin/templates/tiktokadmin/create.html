@@ -11,6 +11,7 @@
 
     <label>Add to queue:</label>
     <select name = "queue_id">
+        <option value = 0>Do not add to queue</option>
         {% for queue in queue_list %}
         <option value = "{{queue.id}}">{{queue.name}}</option>
         {% endfor %}
