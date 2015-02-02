@@ -1,7 +1,9 @@
-'''
+import uuid
 import tweepy
-from cqlengine import connection
+from cqlengine import connection, columns, Model
+from models import  Queue_tweet_responses
 from cqlengine.management import sync_table
+
 
 class Listener(tweepy.StreamListener):
 
@@ -9,9 +11,7 @@ class Listener(tweepy.StreamListener):
 
     def on_status(self, status):
         try:
-            c = self.conn.cursor()
-            c.execute("""insert into feed_post values (%r,'%s','%s',%d)""") % (status.id, status.text, status.author.screen_name, status.created_at)
-            self.conn.commit()
+            Queue_tweet_responses.create(queue_id =, time_received = status.created_at, tweet_id = uuid.uuid4(),  response =status.text)
         except:
             pass
 
@@ -22,4 +22,3 @@ def main():
     stream = tweepy.Stream(auth=auth, listener=Listener())
     stream.filter(track=('CassandraPopQuiz',))
 
-'''

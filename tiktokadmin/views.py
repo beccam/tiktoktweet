@@ -20,6 +20,7 @@ def create(request):
     return HttpResponse(template.render(context))
 
 def create_post(request):
+    template = loader.get_template('tiktokadmin/create_post.html')
     text = request.POST['tweettext']
     tweet_time = request.POST['when_to_tweet']
     tweet_time = datetime.strptime(tweet_time, '%Y-%m-%d %H:%M:%S')
@@ -27,7 +28,8 @@ def create_post(request):
     tweetid = uuid.uuid4()
     Tweets.create(id = tweetid, created = datetime.utcnow(), modified = datetime.utcnow(),  tweet = text)
     Tweets_queue.create(queue_id = queueid, time_to_send = tweet_time, tweet_id = tweetid)
-    return HttpResponse(text)
+    context = RequestContext(request, {'text': text})
+    return HttpResponse(template.render(context))
 
 
 def queue(request):
@@ -37,9 +39,13 @@ def queue(request):
     return HttpResponse(template.render(context))
 
 def queue_created(request):
+    template = loader.get_template('tiktokadmin/queue_created.html')
     text = request.POST['queuename']
+    if not text:
+        return HttpResponse("No queue name was entered")
     Queue.create(id = uuid.uuid4(), created = datetime.utcnow(), modified = datetime.utcnow(),  name = text)
-    return HttpResponse(text)
+    context = RequestContext(request, {'text': text} )
+    return HttpResponse(template.render(context))
 
 def queue_edit(request):
     template = loader.get_template('tiktokadmin/queue_edit.html')
@@ -55,11 +61,13 @@ def queue_edit(request):
 
 
 def queue_delete(request):
+    template = loader.get_template('tiktokadmin/queue_deleted.html')
     if 'queue_id' in request.POST:
         queue_id = request.POST['queue_id']
         Tweets_queue.objects(queue_id= queue_id).delete()
         Queue.objects(id= queue_id).delete()
-        return HttpResponse("Queue Deleted")
+        context = RequestContext(request)
+        return HttpResponse(template.render(context))
     else:
         pass
 
@@ -132,12 +140,14 @@ def add_queue(request):
     return HttpResponse(template.render(context))
 
 def add_queue_done(request):
+    template = loader.get_template('tiktokadmin/queue_done.html')
     tweet_id = request.POST['tweet_id']
     when_to_tweet = request.POST['when_to_tweet']
     tweet_time = datetime.strptime(when_to_tweet, '%Y-%m-%d %H:%M:%S')
     queue_id = request.POST['queue_id']
     Tweets_queue.create(queue_id = queue_id, time_to_send = tweet_time, tweet_id = tweet_id)
-    return HttpResponse("tweet queued")
+    context = RequestContext(request, {'queue_id': queue_id, 'when_to_tweet': when_to_tweet})
+    return HttpResponse(template.render(context))
 
 
 
