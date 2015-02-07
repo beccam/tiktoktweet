@@ -1,24 +1,72 @@
-import uuid
 import tweepy
-from cqlengine import connection, columns, Model
-from models import  Queue_tweet_responses
+from models import Tweets, Queue, Tweets_queue, Tweets_sent, Queue_tweet_responses, Tweets_sent_by_twitter_id
+from datetime import datetime
+import sys, logging, tweepy, time
+from cqlengine import connection, columns
 from cqlengine.management import sync_table
+from ConfigParser import SafeConfigParser
 
+logging.basicConfig(level=logging.INFO)
+connection.setup(['127.0.0.1'], "tiktok")
+logging.info("Connected to tiktok database")
 
-class Listener(tweepy.StreamListener):
+parser = SafeConfigParser()
+parser.read('config.txt')
 
-    connection.setup(['127.0.0.1'], "tiktok")
+consumer_key = parser.get('conf', 'CONSUMER_KEY')
+consumer_secret = parser.get('conf', 'CONSUMER_SECRET')
+access_token = parser.get('conf', 'ACCESS_KEY')
+access_token_secret = parser.get('conf', 'ACCESS_SECRET')
+
+class StdOutListener(tweepy.StreamListener):
+    ''' Handles data received from the stream. '''
 
     def on_status(self, status):
-        try:
-            Queue_tweet_responses.create(queue_id =, time_received = status.created_at, tweet_id = uuid.uuid4(),  response =status.text)
-        except:
-            pass
+        # Prints the text of the tweet
+        print(status.text)
+        print(status.in_reply_to_status_id)
+        print(status.created_at)
+        print(status.author.screen_name)
 
 
-def main():
-    auth = tweepy.OAuthHandler('C_KEY', 'C_SECRET')
-    auth.set_access_token('ACCESS_TOKEN', 'ACCESS_SECRET')
-    stream = tweepy.Stream(auth=auth, listener=Listener())
-    stream.filter(track=('CassandraPopQuiz',))
+        list = Tweets_sent_by_twitter_id.objects.filter(twitter_id = status.in_reply_to_status_id)
+        tweet = list.get()
+        Queue_tweet_responses.create(queue_id = tweet.queue_id , time_received = columns.TimeUUID.from_datetime(status.created_at), tweet_id = tweet.tweet_id, response = status.text, user = status.author.screen_name )
+
+        return True
+
+    def on_error(self, status_code):
+        print('Got an error with status code: ' + str(status_code))
+        return True # To continue listening
+
+    def on_timeout(self):
+        print('Timeout...')
+        return True # To continue listening
+
+def fill_in_timeline(auth):
+    api = tweepy.API(auth)
+    public_tweets = api.search('@CassPopQuiz', count =100)
+    for status in public_tweets:
+
+        print(status.text)
+        print(status.in_reply_to_status_id)
+        print(status.created_at)
+        print(status.author.screen_name)
+
+        if status.in_reply_to_status_id != None:
+
+            list = Tweets_sent_by_twitter_id.objects.filter(twitter_id = status.in_reply_to_status_id)
+            tweet = list.get()
+            Queue_tweet_responses.create(queue_id = tweet.queue_id , time_received = status.created_at, tweet_id = tweet.tweet_id, response = status.text, user = status.author.screen_name )
+
+
+if __name__ == '__main__':
+    listener = StdOutListener()
+    auth = tweepy.OAuthHandler((parser.get('conf', 'CONSUMER_KEY')), (parser.get('conf', 'CONSUMER_SECRET')))
+    auth.set_access_token((parser.get('conf', 'ACCESS_KEY')), (parser.get('conf', 'ACCESS_SECRET')))
+
+    fill_in_timeline(auth)
+
+    stream = tweepy.Stream(auth, listener)
+    stream.filter(follow=['2815304775'])
 

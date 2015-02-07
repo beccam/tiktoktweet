@@ -6,7 +6,7 @@
 <form action="{% url 'tiktokadmin:responses_manage'  %}" method="post">
     {% csrf_token %}
     <label>Select a queue:</label>
-    <select id = "queue_id">
+    <select name = "queue_id">
         {% for queue in queue_list %}
         <option value = "{{queue.id}}">{{queue.name}}</option>
         {% endfor %}

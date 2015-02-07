@@ -27,14 +27,10 @@ def create_post(request):
     if queueid != 0:
         tweet_time = request.POST['when_to_tweet']
         tweet_time = datetime.strptime(tweet_time, '%Y-%m-%d %H:%M:%S')
-        Tweets.create(id = tweetid, created = datetime.utcnow(), modified = datetime.utcnow(),  tweet = text)
         Tweets_queue.create(queue_id = queueid, time_to_send = tweet_time, tweet_id = tweetid)
-        context = RequestContext(request, {'text': text})
-        return HttpResponse(template.render(context))
-    else:
-        Tweets.create(id = tweetid, created = datetime.utcnow(), modified = datetime.utcnow(),  tweet = text)
-        context = RequestContext(request, {'text': text})
-        return HttpResponse(template.render(context))
+    Tweets.create(id = tweetid, created = datetime.utcnow(), modified = datetime.utcnow(),  tweet = text)
+    context = RequestContext(request, {'text': text})
+    return HttpResponse(template.render(context))
 
 
 def queue(request):

@@ -26,12 +26,18 @@ class Tweets_queue(Model):
 
 class Queue_tweet_responses(Model):
     queue_id = columns.UUID(primary_key=True)
-    time_received = columns.TimeUUID(primary_key=True, clustering_order="DESC")
+    time_received = columns.DateTime(primary_key=True, clustering_order="DESC")
+    user = columns.Text(primary_key=True)
     tweet_id = columns.UUID()
     response = columns.Text()
+
 
 class Tweets_sent(Model):
     queue_id = columns.UUID(primary_key=True)
     time_sent = columns.DateTime(primary_key=True, clustering_order="DESC")
     tweet_id = columns.UUID()
 
+class Tweets_sent_by_twitter_id(Model):
+    twitter_id = columns.BigInt(primary_key=True)
+    queue_id = columns.UUID()
+    tweet_id = columns.UUID()
