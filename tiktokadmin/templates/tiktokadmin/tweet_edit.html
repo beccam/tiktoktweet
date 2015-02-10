@@ -16,7 +16,7 @@
          document.getElementById('newText').innerHTML = formInput;
          }
          </script>
-        <p>Edit tweet: <span id='newText'></span> </p>
+        <p>Time to tweet in the form yyyy-mm-dd hh:mm:ss  <span id='newText'></span> </p>
 
 
         <input type='datetime' name='new_time' value='{{time_to_send}}' />
@@ -26,6 +26,10 @@
 
         <input type="submit" value="Submit"/>
 
+    </form>
+    <br>
+    <form action="/tiktokadmin/">
+        <input type="submit" value="Home" id="jsSubmit1" >
     </form>
     </body>
     </html>

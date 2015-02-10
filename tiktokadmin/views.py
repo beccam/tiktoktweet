@@ -24,8 +24,13 @@ def create_post(request):
     text = request.POST['tweettext']
     queueid = request.POST['queue_id']
     tweetid = uuid.uuid4()
-    if queueid != 0:
+    if queueid != '0':
         tweet_time = request.POST['when_to_tweet']
+        if tweet_time == '':
+            template = loader.get_template('tiktokadmin/create_post_no_time.html')
+            context = RequestContext(request)
+            return HttpResponse(template.render(context))
+
         tweet_time = datetime.strptime(tweet_time, '%Y-%m-%d %H:%M:%S')
         Tweets_queue.create(queue_id = queueid, time_to_send = tweet_time, tweet_id = tweetid)
     Tweets.create(id = tweetid, created = datetime.utcnow(), modified = datetime.utcnow(),  tweet = text)
@@ -52,12 +57,13 @@ def queue_edit(request):
     template = loader.get_template('tiktokadmin/queue_edit.html')
     queue_id = request.POST['queue_id']
     tweetqueue_list = Tweets_queue.objects.filter(queue_id = queue_id)
+    queuelist = Queue.get(id = queue_id)
     #do a foreach loop on tweetqueue_list to get all tweet_ids for reteiving tweets from Tweets table.
     tweet_list = []
     for entry in tweetqueue_list:
         tweet = Tweets.get(id = entry.tweet_id)
         tweet_list.append(TweetMetaData(tweet.id, tweet.tweet, entry.queue_id, entry.time_to_send.strftime("%Y-%m-%d %H:%M:%S")))
-    context = RequestContext(request, {'tweet_list': tweet_list,'queue_id': queue_id} )
+    context = RequestContext(request, {'tweet_list': tweet_list,'queue_id': queue_id, 'queuelist': queuelist} )
     return HttpResponse(template.render(context))
 
 
@@ -90,6 +96,7 @@ def tweet_edit(request):
         return HttpResponse(template.render(context))
 
 def tweet_final(request):
+    template = loader.get_template('tiktokadmin/tweet_final.html')
     if 'queue_id' in request.POST:
         text = request.POST['tweettext']
         old_tweet_time = request.POST['old_tweet_time']
@@ -101,13 +108,14 @@ def tweet_final(request):
         Tweets.objects(id=tweet_id).update(tweet= text, modified = datetime.utcnow())
         Tweets_queue.objects(queue_id = queue_id, time_to_send = old_tweet_time).delete()
         Tweets_queue.create(queue_id = queue_id, time_to_send = tweet_time, tweet_id = tweet_id)
-        return HttpResponse(text)
+
     else:
         text = request.POST['tweettext']
         tweet_time = request.POST['new_time']
         tweet_id = request.POST['tweet_id']
         Tweets.objects(id=tweet_id).update(tweet= text, modified = datetime.utcnow())
-        return HttpResponse(text)
+    context = RequestContext(request, {'text':text})
+    return HttpResponse(template.render(context))
 
 
 def schedule_tweet(request):
@@ -127,7 +135,8 @@ def responses_manage(request):
     template = loader.get_template('tiktokadmin/responses_manage.html')
     queue_id = request.POST['queue_id']
     responsequeue_list = Queue_tweet_responses.filter(queue_id = queue_id)
-    context = RequestContext(request, {'responsequeue_list': responsequeue_list})
+    queuelist = Queue.get(id = queue_id)
+    context = RequestContext(request, {'responsequeue_list': responsequeue_list, 'queuelist': queuelist})
     return HttpResponse(template.render(context))
 
 def tweet_delete(request):

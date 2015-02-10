@@ -4,20 +4,23 @@
 
 <form method="post">
     <h2>Manage responses</h2>
-    <p>Name of queue</p>
+    <h3>{{ queuelist.name }}</h3>
     <table border ="1">
         {% for response in responsequeue_list %}
         <tr>
-            <td><input type="hidden" name = 'response' value='{{response.id}}' >{{response.response}}</td>
+
+            <td><input type="hidden" name = 'response' value='{{response.id}}' >{{response.user}}: "{{response.response}}" at {{response.time_received}}</td>
+
         </tr>
         {% endfor %}
 
     </table>
 
-    <br>
-    <input type="checkbox" name="checkbox[]" value="Delete queue">Delete queue <
-    <br>
-    <input type="submit" value="Submit"/></form>
+    <form action="/tiktokadmin/">
+        <input type="submit" value="Home" id="jsSubmit1" >
+    </form>
+
+
 
 </body>
 </html>
