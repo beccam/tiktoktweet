@@ -1,34 +1,147 @@
 <!DOCTYPE html>
 <html>
-<body>
+<head>
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- ... -->
+    <script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/bower_components/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/bower_components/jquery-validation/dist/jquery.validate.js"></script>
+    <script type="text/javascript" src="/static/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/static/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="/static/bower_components/startbootstrap-sb-admin-2/dist/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/static/bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="/static/bower_components/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/static/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+
+</head>
+
+<div style="background:#eef3ff !important" class="jumbotron">
+
+    <div class="row">
+
+                <div class="col-lg-8 col-md-offset-2"><h1 class="text-left text-primary" style="@font-family-monospace:Consolas" >TikTok Tweet</h1>
+                <p> A tweet scheduler, written in Python and backed by the power of Cassandra</p>
+                    <form action="https://github.com/beccam/tiktoktweet">
+                        <input class="btn btn-primary" type="submit" value="View on Github" id="jsSubmit1" >
+                    </form></div>
+
+
+                <div><img src="http://www.webwizardofoz.com/images/Tiktok.png" class="img-circle"></div>
+
+    </div>
+
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="http://127.0.0.1:8000/tiktokadmin/create/">Create new Tweet<span class="sr-only">(current)</span></a></li>
+                <li><a href="http://127.0.0.1:8000/tiktokadmin/schedule/">Schedule a Tweet </a></li>
+                <li><a href="http://127.0.0.1:8000/tiktokadmin/queue/">Manage Queues</a></li>
+                <li><a href="http://127.0.0.1:8000/tiktokadmin/responses/">Manage Responses</a></li>
+
+            </ul>
+
+        </div>
+
+
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+<body >
+
+
+<div id="wrapper">
 
 <form action="{% url 'tiktokadmin:create_post'  %}" method="post">
     {% csrf_token %}
+
     <h2>Create a Tweet</h2>
-    <textarea class="medium" name="tweettext" cols="20" rows="5" ></textarea>
+
+    <textarea class="form-control"  id="tweettext" name="tweettext"  maxlength="140"  required></textarea>
 
 <br>
 
-    <label>Add to queue:</label>
-    <select name = "queue_id">
+
+    <div class="col-sm-6">
+        <label>Add to queue:</label>
+    <select class = "form-control" name = "queue_id">
         <option value = 0>Do not add to queue</option>
         {% for queue in queue_list %}
         <option value = "{{queue.id}}">{{queue.name}}</option>
         {% endfor %}
     </select>
-    <br><br>
-    <label>Time to tweet in the form yyyy-mm-dd hh:mm:ss</label>
-    <div class="element-input"><label class="title"></label><div class="item-cont"><input class="large" type="datetime" name="when_to_tweet" placeholder="yyyy-mm-dd hh:mm:ss"/><span class="icon-place"></span></div></div>
+        </div>
 
+    <br><br>
+    <label>                    </label>
+
+
+    <div class="container">
+        <label>Time to tweet </label>
+        <div class="row">
+            <div class='col-sm-6'>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker1'>
+
+                        <input type='text' class="form-control" name="when_to_tweet" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker1').datetimepicker();
+                });
+            </script>
+        </div>
+    </div>
     <br>
 
-    <input type="submit" value="Submit"/>
+    <input class="btn btn-info" type="submit" value="Create"/>
 
 </form>
 <br>
 <form action="/tiktokadmin/">
-    <input type="submit" value="Home" id="jsSubmit1" >
+    <input class="btn btn-primary" type="submit" value="Home" id="jsSubmit1" >
 </form>
+    <script>
+        $("#validation").validate();
+    </script>
+
+</div>
 
 </body>
+    </div>
+</div>
 </html>

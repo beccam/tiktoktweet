@@ -1,5 +1,71 @@
+<head>
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- ... -->
+    <script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/bower_components/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/static/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="/static/bower_components/startbootstrap-sb-admin-2/dist/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/static/bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="/static/bower_components/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/static/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+
+</head>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="http://127.0.0.1:8000/tiktokadmin/create/">Create new Tweet<span class="sr-only">(current)</span></a></li>
+                <li><a href="http://127.0.0.1:8000/tiktokadmin/schedule/">Schedule a Tweet </a></li>
+                <li><a href="http://127.0.0.1:8000/tiktokadmin/queue/">Manage Queues</a></li>
+                <li><a href="http://127.0.0.1:8000/tiktokadmin/responses/">Manage Responses</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 bg-info">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"><h2 class="text-center text-primary" style="@font-family-monospace:Consolas" >TikTok Tweet</h2></div>
+                    <div class="col-md-4"><img src="http://www.webwizardofoz.com/images/Tiktok.png" height ="66" width = "75" class="img-circle"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+
 <p>Queue deleted</p>
 
 <form action="/tiktokadmin/">
-    <input type="submit" value="Home" id="jsSubmit1" >
+    <input class="btn btn-primary" type="submit" value="Home" id="jsSubmit1" >
 </form>
