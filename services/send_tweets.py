@@ -12,17 +12,18 @@ from cqlengine.management import sync_table
 This is for sending tweets. It can be run periodically
 '''
 
+parser = SafeConfigParser()
+parser.read('config.txt')
+
 logging.basicConfig(level=logging.INFO)
-connection.setup(['127.0.0.1'], "tiktok")
-logging.info("Connected to tiktok database")
+connection.setup([(parser.get('connection', 'host'))], (parser.get('connection', 'keyspace')))
+logging.info("Connected to " +  (parser.get('connection', 'keyspace')) + " database")
 
 sync_table(Tweets)
 sync_table(Queue)
 sync_table(Tweets_queue)
 
 
-parser = SafeConfigParser()
-parser.read('config.txt')
 
 CONSUMER_KEY = parser.get('conf', 'CONSUMER_KEY')
 CONSUMER_SECRET = parser.get('conf', 'CONSUMER_SECRET')

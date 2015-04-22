@@ -1,3 +1,5 @@
+from ConfigParser import SafeConfigParser
+
 """
 Django settings for tiktoktweet project.
 
@@ -59,6 +61,10 @@ WSGI_APPLICATION = 'tiktoktweet.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+
+parser = SafeConfigParser()
+parser.read('../services/config.txt')
+
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -66,13 +72,13 @@ DATABASES = {
     },
     'cassandra': {
         'ENGINE': 'django_cassandra_engine',
-        'NAME': 'tiktok',
+        'NAME': (parser.get('db_settings', 'keyspace')),
         'TEST_NAME': 'test_db',
-        'HOST': '127.0.0.1',
+        'HOST': (parser.get('db_settings', 'host')),
         'OPTIONS': {
             'replication': {
-                'strategy_class': 'SimpleStrategy',
-                'replication_factor': 1
+                'strategy_class': (parser.get('db_settings', 'strategy_class')),
+                'replication_factor': (parser.get('db_settings', 'replication_factor'))
             }
         }
     }

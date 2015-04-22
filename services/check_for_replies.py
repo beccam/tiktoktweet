@@ -6,12 +6,13 @@ from cqlengine import connection, columns
 from cqlengine.management import sync_table
 from ConfigParser import SafeConfigParser
 
-logging.basicConfig(level=logging.INFO)
-connection.setup(['127.0.0.1'], "tiktok")
-logging.info("Connected to tiktok database")
-
 parser = SafeConfigParser()
 parser.read('config.txt')
+
+logging.basicConfig(level=logging.INFO)
+connection.setup([(parser.get('connection', 'host'))], (parser.get('connection', 'keyspace')))
+logging.info("Connected to " + (parser.get('connection', 'keyspace')) + " database")
+
 
 consumer_key = parser.get('conf', 'CONSUMER_KEY')
 consumer_secret = parser.get('conf', 'CONSUMER_SECRET')
@@ -45,7 +46,7 @@ class StdOutListener(tweepy.StreamListener):
 
 def fill_in_timeline(auth):
     api = tweepy.API(auth)
-    public_tweets = api.search('@CassPopQuiz', count =100)
+    public_tweets = api.search((parser.get('replies', 'in_reply_to')), count =100)
     for status in public_tweets:
 
         print(status.text)
@@ -68,5 +69,5 @@ if __name__ == '__main__':
     fill_in_timeline(auth)
 
     stream = tweepy.Stream(auth, listener)
-    stream.filter(follow=['2815304775'])
+    stream.filter(follow=[(parser.get('replies', 'account_id'))])
 

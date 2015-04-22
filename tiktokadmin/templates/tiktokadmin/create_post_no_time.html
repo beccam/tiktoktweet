@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <head>
 
     <meta charset="utf-8">
@@ -8,6 +10,7 @@
     <script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/static/bower_components/moment/min/moment.min.js"></script>
     <script type="text/javascript" src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/bower_components/jquery-validation/dist/jquery.validate.js"></script>
     <script type="text/javascript" src="/static/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/static/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
@@ -36,6 +39,44 @@
     <link href="/static/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 
+
+</head>
+
+<div style="background:#eef3ff !important" class="jumbotron">
+
+    <div class="row">
+
+        <div class="col-lg-8 col-md-offset-2"><h1 class="text-left text-primary" style="@font-family-monospace:Consolas" >TikTok Tweet</h1>
+            <p> A tweet scheduler, written in Python and backed by the power of Cassandra</p>
+            <form action="https://github.com/beccam/tiktoktweet">
+                <input class="btn btn-primary" type="submit" value="View on Github" id="jsSubmit1" >
+            </form></div>
+
+
+        <div><img src="http://www.webwizardofoz.com/images/Tiktok.png" class="img-circle"></div>
+
+    </div>
+
+</div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="http://127.0.0.1:8000/tiktokadmin/create/">Create new Tweet<span class="sr-only">(current)</span></a></li>
+                <li><a href="http://127.0.0.1:8000/tiktokadmin/schedule/">Schedule a Tweet </a></li>
+                <li><a href="http://127.0.0.1:8000/tiktokadmin/queue/">Manage Queues</a></li>
+                <li><a href="http://127.0.0.1:8000/tiktokadmin/responses/">Manage Responses</a></li>
+
+            </ul>
+
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
 
 </head>
 <div class="container-fluid">
