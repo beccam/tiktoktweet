@@ -32,7 +32,31 @@ The current version of TikTokTweets works with:
 
 
 ## Configuration
+```
+[connection]
+host = 127.0.0.1
+keyspace = tiktok
 
+[replies]
+in_reply_to = @CassPopQuiz
+account_id = 2815304775
+
+[conf]
+CONSUMER_KEY = Q0oPcknmp6NBaXeITAoKT1FC7
+CONSUMER_SECRET = 3NWW2GQityLUzxIqLlDWXlv6pEZLpGzM7qFNi08GNLccMEeM36
+ACCESS_KEY = 2815304775-sTJ3oxreuS3djrhdFl6jxQ3FN4NwfYLIrLSS0P3
+ACCESS_SECRET = Xf62pb8rNiKnIPdBzwAT2Ise9Im44keKIVgIBt4OBeMJG
+
+[time]
+my_time = 10
+
+[db_settings]
+keyspace = tiktok
+host = 127.0.0.1
+# for replication
+strategy_class = SimpleStrategy
+replication_factor = 1
+```
 ## Run tiktoktweet
 
 ## Licence
