@@ -10,9 +10,11 @@ TikTokTweet is a tweet scheduler written in Python and backed by Cassandra. Some
 Ability to create a Tweet
 * You can save it in the database for it for later
 * Optionally add it directly to a queue to be tweeted out at a set time.
+
 Add your saved tweets to a queue
 * Assign a date and time to saved tweets to be sent out from the Schedule a Tweet page
 * Choose a to particular queue to add the tweet to
+
 Create queues for tweets
 * Create and name queues for a specific categories of tweet
 * Add tweets to these queues to be sent out on schedule
