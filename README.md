@@ -1,4 +1,4 @@
-tiktoktweet
+TikTokTweet
 ===========
 
 Twitter client for scheduling tweets.
@@ -21,6 +21,9 @@ Create queues for tweets
 * Add tweets directly from Create Tweet or add a saved tweet from the Schedule a Tweet page
 * Add new queues from the Manage queues page, and edit or delete queued tweets as well
 
+Collect responses to you tweets
+* Listener collects responses to you tweets
+* These are stored in Cassandra according to the queue of the orginal tweet
 
 ## Requirements
 
@@ -31,6 +34,22 @@ The current version of TikTokTweets works with:
 * Django Cassandra Engine 0.2.2 (the Cassandra backend for Django)
 * Cassandra 2.x
 * Python 2.7
+
+Install Django
+
+`pip install django`
+
+Install cqlengine using
+
+`pip install cqlengine`
+
+Install Tweepy
+
+`pip install tweepy`
+
+Install Django Cassandra Engine
+
+`pip install django-cassandra-engine`
 
 
 ## Configuration
