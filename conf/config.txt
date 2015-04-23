@@ -1,0 +1,26 @@
+[connection]
+host = 127.0.0.1
+keyspace = tiktok
+
+[replies]
+in_reply_to = @CassPopQuiz
+account_id = 2815304775
+
+[conf]
+CONSUMER_KEY = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+CONSUMER_SECRET = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ACCESS_KEY = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ACCESS_SECRET = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+[time]
+my_time = 10
+
+[db_settings]
+keyspace = tiktok
+host = 127.0.0.1
+# for replication
+strategy_class = SimpleStrategy
+replication_factor = 1
+
+
+

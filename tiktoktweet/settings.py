@@ -63,7 +63,7 @@ WSGI_APPLICATION = 'tiktoktweet.wsgi.application'
 
 
 parser = SafeConfigParser()
-parser.read('../services/config.txt')
+parser.read('/Users/rebeccamills/pythonprj/tiktoktweet/services/config.txt')
 
 DATABASES = {
     'default': {
