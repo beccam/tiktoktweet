@@ -1,4 +1,5 @@
 from ConfigParser import SafeConfigParser
+import os
 
 """
 Django settings for tiktoktweet project.
@@ -63,7 +64,11 @@ WSGI_APPLICATION = 'tiktoktweet.wsgi.application'
 
 
 parser = SafeConfigParser()
-parser.read('/Users/rebeccamills/pythonprj/tiktoktweet/services/config.txt')
+parser.read('conf/config.txt')
+
+print "stuff"
+print os.getcwd()
+
 
 DATABASES = {
     'default': {
