@@ -75,6 +75,8 @@ host = 127.0.0.1
 strategy_class = SimpleStrategy
 replication_factor = 1
 
+```
+
 
 [connection]
 host = 127.0.0.1
@@ -106,7 +108,7 @@ host = 127.0.0.1
 strategy_class = SimpleStrategy
 replication_factor = 1
 database settings for the initial set up of the keyspace and tables.
-```
+
 ## Run tiktoktweet
 
 Once you’ve set your config file, you can start up
