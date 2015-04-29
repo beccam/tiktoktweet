@@ -53,6 +53,8 @@ Install Django Cassandra Engine
 
 
 ## Configuration
+Edit the comfiguration file conf/config.txt
+
 ```
 [connection]
 host = 127.0.0.1
@@ -61,45 +63,16 @@ keyspace = tiktok
 [replies]
 in_reply_to = @CassPopQuiz
 account_id = 2815304775
-
-[conf]
-
-
-[time]
-my_time = 10
-
-[db_settings]
-keyspace = tiktok
-host = 127.0.0.1
-# for replication
-strategy_class = SimpleStrategy
-replication_factor = 1
-
-```
-
-
-[connection]
-host = 127.0.0.1
-keyspace = tiktok
-Here you need to specify the address of your cluster/node, as well as the keyspace where the tweets and related data are going to be held. This is so that cqlengine can connect to your database.
-
-[replies]
-in_reply_to = @CassPopQuiz
-account_id = 2815304775
-Add “@YourUserName” and your twitter count id such that the program can collect replies to yor tweets
 
 [conf]
 CONSUMER_KEY = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 CONSUMER_SECRET = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ACCESS_KEY = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ACCESS_SECRET = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-Add your twitter auth information so that TikTok Tweet can have access to you Twitter account
 
 
 [time]
 my_time = 10
-Set how frequently you would like TikTok Tweet to check the queues for new tweets to send (in seconds)
-
 
 [db_settings]
 keyspace = tiktok
@@ -107,7 +80,9 @@ host = 127.0.0.1
 # for replication
 strategy_class = SimpleStrategy
 replication_factor = 1
-database settings for the initial set up of the keyspace and tables.
+
+```
+
 
 ## Run tiktoktweet
 
